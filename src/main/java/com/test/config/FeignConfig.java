@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @EnableReactiveFeignClients(basePackages = "com.test.api")
 public class FeignConfig {
 
-    @Value("${ryzen.biz.feignclient.timeout:4500}")
+    @Value("${timeout:4500}")
     private long timeout;
 
     @Bean
