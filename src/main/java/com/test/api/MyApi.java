@@ -1,8 +1,9 @@
 package com.test.api;
 
+import com.test.data.A;
+import com.test.data.B;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import reactivefeign.FallbackFactory;
 import reactivefeign.spring.config.ReactiveFeignClient;
@@ -12,10 +13,12 @@ import reactor.core.publisher.Mono;
 @Repository
 public interface MyApi extends ServiceApi{
     @Override
-    @GetMapping("/test/my")
-    Mono<String> testForGet();
+    @GetMapping("/test/A")
+    Mono<A> testA();
 
-
+    @Override
+    @GetMapping("/test/B")
+    Mono<B> testB();
 
 
     @Component
@@ -25,8 +28,13 @@ public interface MyApi extends ServiceApi{
         public MyApi apply(Throwable throwable) {
             return new MyApi() {
                 @Override
-                public Mono<String> testForGet() {
+                public Mono<A> testA() {
                     return Mono.empty();
+                }
+
+                @Override
+                public Mono<B> testB() {
+                    return null;
                 }
             };
         }
