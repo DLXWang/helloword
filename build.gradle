@@ -40,6 +40,8 @@ dependencies {
     implementation("com.playtika.reactivefeign:feign-reactor-core:3.3.0")
     implementation("com.playtika.reactivefeign:feign-reactor-cloud:3.3.0")
     implementation("com.playtika.reactivefeign:feign-reactor-webclient:3.3.0")
+    implementation 'com.typesafe.akka:akka-actor_2.13:2.6.16'
+    implementation 'com.typesafe.akka:akka-testkit_2.12:2.5.19'
 
     compileOnly("org.projectlombok:lombok:1.18.18")
     annotationProcessor("org.projectlombok:lombok:1.18.18")
