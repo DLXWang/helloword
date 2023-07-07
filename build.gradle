@@ -1,0 +1,76 @@
+plugins {
+    id 'org.springframework.boot' version '2.6.9' apply false
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
+}
+
+
+apply plugin : 'org.springframework.boot'
+apply plugin : 'io.spring.dependency-management'
+apply plugin : 'java'
+apply plugin : 'java-library'
+apply plugin : 'idea'
+apply plugin : 'maven-publish'
+
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2021.0.5"
+    }
+}
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+
+    implementation 'com.playtika.reactivefeign:feign-reactor-spring-configuration:3.3.0'
+    implementation("com.playtika.reactivefeign:feign-reactor-core:3.3.0")
+    implementation("com.playtika.reactivefeign:feign-reactor-cloud:3.3.0")
+    implementation("com.playtika.reactivefeign:feign-reactor-webclient:3.3.0")
+    implementation 'com.typesafe.akka:akka-actor_2.13:2.6.16'
+    implementation 'com.typesafe.akka:akka-testkit_2.12:2.5.19'
+
+    compileOnly("org.projectlombok:lombok:1.18.18")
+    annotationProcessor("org.projectlombok:lombok:1.18.18")
+    /* log4j2 */
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2:2.7.1'
+    implementation 'com.lmax:disruptor:3.4.4'
+
+
+    /** redis */
+    api 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+
+    /** mongo */
+    api 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+
+
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    enabled = false
+}
+
+bootJar {
+    destinationDirectory = file("$project.projectDir/target")
+}
+
+clean.doFirst {
+    delete "$project.projectDir/target"
+}
