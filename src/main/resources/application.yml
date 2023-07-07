@@ -7,11 +7,22 @@ spring:
     port: 6379
     password: 123456
 
+  application:
+    name: test
+  datasource:
+    url: jdbc:mysql://localhost:3306/thanos?useUnicode=true&characterEncoding=utf-8&serverTimeZone=UTC&allowMultiQueries=true&&useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   data:
     mongodb:
       test:
         uri: mongodb://admin:123456@localhost:27017/thanos?authSource=admin
+
+
+mybatis-plus:
+  type-enums-package: com.test.mysql.dict
 
 
 

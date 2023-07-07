@@ -5,6 +5,7 @@ import com.test.api.MyApi;
 import com.test.data.A;
 import com.test.data.B;
 import com.test.data.C;
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import java.util.Collections;
 
 @SpringBootApplication
 @RestController
-
+@MapperScan(basePackages = {"com.test.mysql.mapper"})
 public class DemoApplication {
     Logger logger = LoggerFactory.getLogger(getClass());
 

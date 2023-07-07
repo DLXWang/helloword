@@ -56,6 +56,11 @@ dependencies {
     /** mongo */
     api 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 
+    /** mysql */
+    api group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: '3.4.3.4'
+    runtimeOnly 'mysql:mysql-connector-java:8.0.32'
+
+
 
 }
 
