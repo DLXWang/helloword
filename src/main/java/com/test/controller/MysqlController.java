@@ -35,4 +35,10 @@ public class MysqlController {
             studentService.testSaveOrUpdate(student);
         }
     }
+
+    @GetMapping("/get")
+    public void testQuery(@RequestParam Long id) {
+        Student byId = studentService.getById(id);
+        System.out.println(byId);
+    }
 }
