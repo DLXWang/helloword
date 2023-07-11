@@ -46,4 +46,9 @@ public class RedisController {
         return redisService.testSetGet();
     }
 
+    @GetMapping("/test-redis-set-has")
+    public Boolean testRedisSetHas() {
+        return redisService.testHashKey();
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.test.redis;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,12 @@ public class RedisService {
     private final ReactiveStringRedisTemplate reactiveRedisTemplate;
     Random random = new Random();
 
+    @Value("${symbol.from-redis}")
+    private boolean fromRedis;
 
     @PostConstruct
     public void init() {
+        System.out.println(fromRedis);
         reactiveRedisTemplate.listenToChannel("testRedisTopic").subscribe(message -> {
                     long l = Long.parseLong(message.getMessage().trim());
                     System.out.println("< 收到的 为>" + l);
@@ -45,6 +49,10 @@ public class RedisService {
 
     public List<String> testSetGet() {
         return reactiveRedisTemplate.opsForSet().members("COIN").collectList().block();
+    }
+
+    public Boolean testHashKey() {
+        return reactiveRedisTemplate.hasKey("COIN").block();
     }
 
 }

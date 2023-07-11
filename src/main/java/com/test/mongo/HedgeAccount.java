@@ -17,12 +17,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class HedgeAccount {
     @Id
     private Long id;
-
     private String name;
-
     private String comment;
-
     private Boolean enabled;
+
     private String creatorId;
     private String updaterId;
     private Long createdTime;

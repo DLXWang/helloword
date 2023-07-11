@@ -25,5 +25,9 @@ mybatis-plus:
   type-enums-package: com.test.mysql.dict
 
 
+symbol:
+  from-redis: false
+
+
 
 
