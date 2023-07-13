@@ -17,16 +17,18 @@ spring:
 
   data:
     mongodb:
+      uri: mongodb://admin:123456@localhost:27017/thanos?authSource=admin
       test:
         uri: mongodb://admin:123456@localhost:27017/thanos?authSource=admin
 
 
-mybatis-plus:
-  type-enums-package: com.test.mysql.dict
-
 
 symbol:
   from-redis: false
+
+sample:
+  path: /test
+  send-interval: 500
 
 
 

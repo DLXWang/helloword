@@ -3,15 +3,16 @@ package com.test.controller;
 
 import com.test.mongo.HedgeAccount;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.GroupOperation;
 import org.springframework.data.mongodb.core.aggregation.ProjectionOperation;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +31,9 @@ public class MongoController {
     @Qualifier("testMongoTemplate")
     private final ReactiveMongoTemplate reactiveMongoTemplate;
 
+    private final MongoTemplate mongoTemplate;
+
+
 
     @GetMapping("/test-mongo-save")
     public void testSave(@RequestParam Long id, @RequestParam String name) {
@@ -43,7 +47,12 @@ public class MongoController {
                 .createdTime(System.currentTimeMillis())
                 .updatedTime(System.currentTimeMillis())
                 .build();
-        reactiveMongoTemplate.save(build).subscribe();
+        try {
+            mongoTemplate.insert(build) ;
+        }catch (DuplicateKeyException exception){
+            System.out.println();
+        }
+
     }
 
     @GetMapping("/test-mongo-remove")
@@ -56,9 +65,10 @@ public class MongoController {
 
     @GetMapping("/test-mongo-agg")
     public void testAgg() {
+        Criteria criteria = Criteria.where("_id").gt(18);
         GroupOperation groupOperation = group("name").first("name").as("name");
         ProjectionOperation projectionOperation = project().andExclude("_id");
-        Aggregation aggregation = Aggregation.newAggregation(groupOperation,projectionOperation);
+        Aggregation aggregation = Aggregation.newAggregation(Aggregation.match(criteria), groupOperation,projectionOperation);
         List<HedgeAccount> block = reactiveMongoTemplate.aggregate(aggregation, HedgeAccount.class, HedgeAccount.class).collectList().block();
         System.out.println(block);
     }

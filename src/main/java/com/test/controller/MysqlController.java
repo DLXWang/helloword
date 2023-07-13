@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 
 @RequiredArgsConstructor
@@ -30,15 +32,15 @@ public class MysqlController {
             Student student = Student.builder()
                     .name(name)
                     .age(18)
-                    .studentType(StudentType.MALE)
+                    .studentType(StudentType.FEMALE)
                     .build();
             studentService.testSaveOrUpdate(student);
         }
     }
 
     @GetMapping("/get")
-    public void testQuery(@RequestParam Long id) {
-        Student byId = studentService.getById(id);
-        System.out.println(byId);
+    public void testQuery() {
+        List<Student> list = studentService.list();
+        System.out.println(list);
     }
 }
