@@ -1,6 +1,7 @@
 package com.test.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.test.mysql.dict.StudentType;
 import com.test.mysql.model.Student;
 import com.test.mysql.service.IStudentService;
@@ -42,5 +43,12 @@ public class MysqlController {
     public void testQuery() {
         List<Student> list = studentService.list();
         System.out.println(list);
+    }
+
+    @GetMapping("/listName")
+    public List<Student> testQueryLam(@RequestParam String name) {
+        LambdaQueryWrapper<Student> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Student::getName, name);
+        return studentService.list(lambdaQueryWrapper);
     }
 }

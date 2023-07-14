@@ -20,7 +20,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Collections;
 
-@SpringBootApplication(exclude = WebMvcAutoConfiguration.class)
+@SpringBootApplication
 @RestController
 @MapperScan(basePackages = {"com.test.mysql.mapper"})
 @EnableAsync
