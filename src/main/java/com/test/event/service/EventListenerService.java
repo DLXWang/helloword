@@ -11,20 +11,21 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class EventListenerService implements IEventListener<StudentWithGrade> {
+public class EventListenerService   {
 
 
 
     @EventListener
     @Async
-    @Override
     public void subscribe(PushEvent<StudentWithGrade> event) {
         log.info("<thread is {} >", Thread.currentThread().getName());
         log.info("<receive  event ： {}   >", event.getMsg());
     }
 
-    //@EventListener
+    @EventListener
+    @Async
     public void subscribe2(PushEvent2<StudentWithGrade> event2) {
-        log.info("<receive  event2 ： {} , thread is {} >", event2.getMsg(), Thread.currentThread());
+        log.info("<thread2 is {} >", Thread.currentThread().getName());
+        log.info("<receive2  event2 ： {} , thread is {} >", event2.getMsg(), Thread.currentThread());
     }
 }

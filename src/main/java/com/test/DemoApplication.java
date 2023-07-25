@@ -34,7 +34,7 @@ import java.util.Collections;
 @MapperScan(basePackages = {"com.test.mysql.mapper"})
 @EnableAsync
 @EnableScheduling
-@EnableJwtCheck
+//@EnableJwtCheck
 public class DemoApplication {
     Logger logger = LoggerFactory.getLogger(getClass());
 

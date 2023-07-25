@@ -26,6 +26,7 @@ public class EventController {
                 .name(name)
                 .gradle(Collections.singletonList(math)).build();
         eventPublisherService.publish(build);
+        eventPublisherService.publish2(build);
     }
 
 }
