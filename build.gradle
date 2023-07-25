@@ -36,10 +36,13 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
 
+    /** open-feign */
     implementation 'com.playtika.reactivefeign:feign-reactor-spring-configuration:3.3.0'
     implementation("com.playtika.reactivefeign:feign-reactor-core:3.3.0")
     implementation("com.playtika.reactivefeign:feign-reactor-cloud:3.3.0")
     implementation("com.playtika.reactivefeign:feign-reactor-webclient:3.3.0")
+
+    /** akka */
     implementation 'com.typesafe.akka:akka-actor_2.13:2.6.16'
     implementation 'com.typesafe.akka:akka-testkit_2.12:2.5.19'
 
@@ -67,8 +70,12 @@ dependencies {
 
 
     /** websocket */
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    implementation 'io.projectreactor.netty:reactor-netty'
+    //implementation 'org.springframework.boot:spring-boot-starter-websocket' --- tomcat , 而不是 netty web
+    // implementation 'io.projectreactor.netty:reactor-netty'
+
+    def deployEnv = System.getenv("deployEnv")
+    def commonVersion = (deployEnv == "prod") ? "[2.0.0, 3.0.0[" : "2.0.0-" + deployEnv + "-SNAPSHOT"
+    api("com.xt.zeus:zeus-extention-jwt:" + commonVersion)
 
 
 

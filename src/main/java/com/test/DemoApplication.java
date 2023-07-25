@@ -2,28 +2,39 @@ package com.test;
 
 import com.test.api.CommonApi;
 import com.test.api.MyApi;
+import com.test.config.web.MyAnnotation;
 import com.test.data.A;
 import com.test.data.B;
 import com.test.data.C;
+//import com.xt.jwt.annotation.EnableJwtCheck;
+import com.xt.jwt.annotation.EnableJwtCheck;
+import com.xt.jwt.annotation.JwtCheckIgnore;
+import com.xt.jwt.bridge.model.AccountKeyInfoVO;
+import com.xt.jwt.constants.SignatureHeader;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
+import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
+import reactor.netty.http.server.HttpServerResponse;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 
 @SpringBootApplication
 @RestController
 @MapperScan(basePackages = {"com.test.mysql.mapper"})
 @EnableAsync
+@EnableScheduling
+@EnableJwtCheck
 public class DemoApplication {
     Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -32,9 +43,11 @@ public class DemoApplication {
     }
 
     @GetMapping("/hello")
-    public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-        logger.info("< 收到的name 是 {}>", name);
-        return String.format("Hello %s!", name);
+    @MyAnnotation
+    public String hello(@RequestParam(value = "name", defaultValue = "World") String name, HttpServletRequest httpServletRequest) { Object user = httpServletRequest.getAttribute("user");
+        AccountKeyInfoVO attribute = (AccountKeyInfoVO) httpServletRequest.getAttribute(SignatureHeader.AUTH_USER);
+        logger.info("< attribute 是 {}>", attribute);
+        return String.format("Hello %s!", attribute);
     }
 
     @GetMapping("/test/common")
@@ -51,6 +64,8 @@ public class DemoApplication {
     public Mono<B> testB() {
         return Mono.just(B.builder().num(12L).build());
     }
+
+
 
 
     @Autowired

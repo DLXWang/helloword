@@ -13,6 +13,7 @@ import java.util.Map;
 
 @Configuration
 public class ServerConfiguration {
+
     @Value("${sample.path}")
     private String samplePath;
 

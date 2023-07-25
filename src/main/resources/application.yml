@@ -1,5 +1,7 @@
 server:
   port: 8090
+  netty:
+    connection-timeout: 2s
 
 spring:
   redis:
@@ -15,6 +17,11 @@ spring:
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  task:
+    scheduling:
+      cron:
+        test: "*/10 * * * * *"  # 每分钟的第0秒执行
+
   data:
     mongodb:
       uri: mongodb://admin:123456@localhost:27017/thanos?authSource=admin
@@ -29,6 +36,14 @@ symbol:
 sample:
   path: /test
   send-interval: 500
+
+
+hedge:
+  alarm:
+    threshold: "{\"btc_usdt\":1500,\"eth_usdt\":1000,\"btc_usd\":1000,\"eth_usd\":1000}"
+    hedge-lark-url: https://open.larksuite.com/open-apis/bot/v2/hook/ce3ed362-cecc-44c2-9ac3-5a7245a5a748
+
+
 
 
 
