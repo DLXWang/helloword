@@ -21,7 +21,7 @@ public class RedisService {
     @PostConstruct
     public void init() {
         System.out.println(fromRedis);
-        reactiveRedisTemplate.listenToChannel("testRedisTopic").subscribe(message -> {
+        reactiveRedisTemplate.listenToChannel("testRedisTopic_01").subscribe(message -> {
                     long l = Long.parseLong(message.getMessage().trim());
                     System.out.println("< 收到的 为>" + l);
 

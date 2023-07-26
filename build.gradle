@@ -78,6 +78,11 @@ dependencies {
     api("com.xt.zeus:zeus-extention-jwt:" + commonVersion)
 
 
+    // localDatetime
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0' // Use the latest version available
+
+
+
 
 
 

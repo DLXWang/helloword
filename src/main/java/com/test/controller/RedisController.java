@@ -1,5 +1,6 @@
 package com.test.controller;
 
+//import com.test.redis.ReactiveRedisService;
 import com.test.redis.RedisService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -17,12 +18,19 @@ public class RedisController {
     Logger logger = LoggerFactory.getLogger(getClass());
     private final RedisService redisService;
 
+    //private final ReactiveRedisService reactiveRedisService;
+
 
     @GetMapping("/test-redis")
     public void testRedis() {
         redisService.publish();
 
     }
+
+    /*@GetMapping("/test-redis-reactive")
+    public void testRedisReactive() {
+        reactiveRedisService.publish();
+    }*/
 
     @GetMapping("/test-redis-set")
     public void testRedisSet() {

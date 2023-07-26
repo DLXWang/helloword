@@ -1,6 +1,5 @@
 package com.test.event.service;
 
-import com.test.event.IEventPublisher;
 import com.test.event.PushEvent;
 import com.test.event.PushEvent2;
 import com.test.event.model.StudentWithGrade;

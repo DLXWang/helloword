@@ -38,6 +38,8 @@ sample:
   send-interval: 500
 
 
+
+
 hedge:
   alarm:
     threshold: "{\"btc_usdt\":1500,\"eth_usdt\":1000,\"btc_usd\":1000,\"eth_usd\":1000}"

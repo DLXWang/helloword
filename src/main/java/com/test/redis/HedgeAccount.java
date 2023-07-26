@@ -1,12 +1,14 @@
-package com.test.mongo;
+package com.test.redis;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 
 @Data
@@ -15,18 +17,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Document
 public class HedgeAccount {
-    @Id
+
     private Long id;
+
     private String name;
+
     private String comment;
+
+    /**
+     * 是否生效
+     */
+
     private Boolean enabled;
 
     private String creatorId;
     private String updaterId;
-    private Long createdTime;
-    private Long updatedTime;
-
-    @Transient
-    private boolean removed;
+    private LocalDateTime createdTime;
+    private Date updatedTime;
 
 }
