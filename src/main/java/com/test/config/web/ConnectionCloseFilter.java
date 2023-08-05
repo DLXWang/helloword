@@ -10,7 +10,7 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-@Component
+/*@Component
 public class ConnectionCloseFilter implements WebFilter, Ordered {
 
     @Override
@@ -31,5 +31,5 @@ public class ConnectionCloseFilter implements WebFilter, Ordered {
         // Set the order to be the highest, ensuring it runs last
         return Ordered.HIGHEST_PRECEDENCE;
     }
-}
+}*/
 

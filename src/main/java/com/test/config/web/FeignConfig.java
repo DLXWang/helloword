@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @Configuration
 @EnableReactiveFeignClients(basePackages = "com.test.api")
 
-@EnableFeignClients(basePackages = {"com.xt.jwt.bridge", "com.test.api"},basePackageClasses = {com.xt.jwt.bridge.UserCenterApi.class})
+//@EnableFeignClients(basePackages = {"com.xt.jwt.bridge", "com.test.api"},basePackageClasses = {com.xt.jwt.bridge.UserCenterApi.class})
 public class FeignConfig {
 
     @Value("${timeout:4500}")

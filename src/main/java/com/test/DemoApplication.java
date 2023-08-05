@@ -1,16 +1,19 @@
 package com.test;
 
-import com.test.api.CommonApi;
+//import com.test.api.CommonApi;
 import com.test.api.MyApi;
 import com.test.config.web.MyAnnotation;
 import com.test.data.A;
 import com.test.data.B;
 import com.test.data.C;
 //import com.xt.jwt.annotation.EnableJwtCheck;
-import com.xt.jwt.annotation.EnableJwtCheck;
+/*import com.xt.jwt.annotation.EnableJwtCheck;
 import com.xt.jwt.annotation.JwtCheckIgnore;
 import com.xt.jwt.bridge.model.AccountKeyInfoVO;
 import com.xt.jwt.constants.SignatureHeader;
+import com.xt.jwt.bridge.model.AccountKeyInfoVO;
+import com.xt.jwt.resource.BaseController;*/
+import io.swagger.annotations.Api;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,10 +26,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.yeauty.annotation.EnableWebSocket;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.server.HttpServerResponse;
 
-import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletRequest;
+import javax.annotation.Resource;
 import java.util.Collections;
 
 @SpringBootApplication
@@ -34,23 +39,29 @@ import java.util.Collections;
 @MapperScan(basePackages = {"com.test.mysql.mapper"})
 @EnableAsync
 @EnableScheduling
+//@EnableWebSocket
 //@EnableJwtCheck
+
+@Api(tags = "DemoApplication 测试")
+//extends BaseController
 public class DemoApplication {
+
+
     Logger logger = LoggerFactory.getLogger(getClass());
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
     }
 
-    @GetMapping("/hello")
+    /*@GetMapping("/hello")
     @MyAnnotation
-    public String hello(@RequestParam(value = "name", defaultValue = "World") String name, HttpServletRequest httpServletRequest) { Object user = httpServletRequest.getAttribute("user");
-        AccountKeyInfoVO attribute = (AccountKeyInfoVO) httpServletRequest.getAttribute(SignatureHeader.AUTH_USER);
-        logger.info("< attribute 是 {}>", attribute);
-        return String.format("Hello %s!", attribute);
-    }
+    public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
+        AccountKeyInfoVO accountInfo = getAccountInfo();
+        logger.info("< accountInfo 是 {}>", accountInfo);
+        return String.format("Hello %s!", accountInfo);
+    }*/
 
-    @GetMapping("/test/common")
+   /* @GetMapping("/test/common")
     public String testCommon() {
         return "common-test";
     }
@@ -70,7 +81,7 @@ public class DemoApplication {
 
     @Autowired
     private MyApi myApi;
-    @Autowired
+    *//*@Autowired
     private CommonApi commonApi;
 
     @GetMapping("/test/invoke")
@@ -84,5 +95,5 @@ public class DemoApplication {
             build.setB(it.getT2());
             return build;
         });
-    }
+    }*/
 }

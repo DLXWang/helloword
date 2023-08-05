@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.6.9' apply false
+    id 'org.springframework.boot' version '2.5.15' apply false
     id 'io.spring.dependency-management' version '1.0.11.RELEASE' apply false
 }
 
@@ -24,19 +24,21 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2021.0.5"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2020.0.3"//2021.0.5 和 2.6.9 不合
     }
 }
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web'//2.6.9的是reactive ，swagger 不合
     implementation 'org.springframework.boot:spring-boot-starter-logging'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    //implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    /** open-feign */
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
 
-    /** open-feign */
+    /** open-feign-reactive */
     implementation 'com.playtika.reactivefeign:feign-reactor-spring-configuration:3.3.0'
     implementation("com.playtika.reactivefeign:feign-reactor-core:3.3.0")
     implementation("com.playtika.reactivefeign:feign-reactor-cloud:3.3.0")
@@ -46,9 +48,11 @@ dependencies {
     implementation 'com.typesafe.akka:akka-actor_2.13:2.6.16'
     implementation 'com.typesafe.akka:akka-testkit_2.12:2.5.19'
 
+    /** lombok */
     compileOnly("org.projectlombok:lombok:1.18.18")
     annotationProcessor("org.projectlombok:lombok:1.18.18")
-    /* log4j2 */
+
+    /** log4j2 */
     implementation 'org.springframework.boot:spring-boot-starter-log4j2:2.7.1'
     implementation 'com.lmax:disruptor:3.4.4'
 
@@ -70,12 +74,12 @@ dependencies {
 
 
     /** websocket */
-    //implementation 'org.springframework.boot:spring-boot-starter-websocket' --- tomcat , 而不是 netty web
+    //implementation 'org.springframework.boot:spring-boot-starter-websocket' //--- tomcat , 而不是 netty web
     // implementation 'io.projectreactor.netty:reactor-netty'
 
     def deployEnv = System.getenv("deployEnv")
     def commonVersion = (deployEnv == "prod") ? "[2.0.0, 3.0.0[" : "2.0.0-" + deployEnv + "-SNAPSHOT"
-    api("com.xt.zeus:zeus-extention-jwt:" + commonVersion)
+    //api("com.xt.zeus:zeus-extention-jwt:" + commonVersion)
 
 
     // localDatetime
@@ -83,9 +87,15 @@ dependencies {
 
 
 
+    /** websocket - endpoint */
+    api "org.yeauty:netty-websocket-spring-boot-starter:0.12.0"
 
 
+    /** swagger */
+    api "io.springfox:springfox-boot-starter:3.0.0"
+    api 'org.springframework.boot:spring-boot-starter-validation'
 
+    api 'com.google.code.gson:gson:2.10.1'
 
 }
 
