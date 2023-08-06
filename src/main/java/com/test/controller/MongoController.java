@@ -4,6 +4,7 @@ package com.test.controller;
 import com.test.controller.model.ResultType;
 import com.test.mongo.DailyFee;
 import com.test.mongo.HedgeAccount;
+import com.test.mongo.Student;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -54,6 +55,45 @@ public class MongoController {
                 .totalFee(fee)
                 .selectedAccountId(1L).build();
         mongoTemplate.save(binance);
+    }
+
+
+    @ApiOperation(value = "test-mongo-save-2")
+    @GetMapping("/test-mongo-save-2")
+    // save 是覆盖
+    public void testSave2(@RequestParam Long studentId, @RequestParam String name, @RequestParam Integer age) {
+        Student build = Student.builder()
+                .studentId(studentId)
+                .build();
+        if (name.length() > 5) {
+            build.setName(name);
+        }
+
+        if (age > 0) {
+            build.setAge(age);
+        }
+
+        reactiveMongoTemplate.save(build).subscribe(System.out::println);
+    }
+
+    @ApiOperation(value = "test-mongo-find-modify")
+    @GetMapping("/test-mongo-find-modify")
+    // save 是覆盖
+    public void testFindModify(@RequestParam Long studentId, @RequestParam String name, @RequestParam Integer age) {
+        FindAndModifyOptions options = new FindAndModifyOptions().returnNew(true);
+        reactiveMongoTemplate.findAndModify(Query.query(Criteria.where("_id").is(studentId)), Update.update("name", name),options, Student.class)
+                .subscribe(it -> {
+                    if(it==null){
+                        System.out.println("<null>");
+                    }else {
+                        System.out.println(it);
+                    }
+
+                }, it->{
+                    System.out.println(it);
+                }, ()->{
+                    System.out.println("com");
+                } );
     }
 
     @ApiOperation(value = "test-mongo-query")
@@ -149,7 +189,7 @@ public class MongoController {
                 aggregation, DailyFee.class, ResultType.class
         );
 
-         ResultType mappedResult = aggregate.blockFirst();
+        ResultType mappedResult = aggregate.blockFirst();
         System.out.println(mappedResult);
         return mappedResult;
     }
