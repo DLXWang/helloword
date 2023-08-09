@@ -25,7 +25,7 @@ public class EventListenerService implements IOther,IEventListener<StudentWithGr
         consumer.setListener(this::onMessage);
     }
 
-    // 代理：没有接口，自己创造接口；有接口，用自己的接口
+    // + @EnableAsync 代理：没有接口，自己创造接口；有接口，用自己的接口
     @EventListener
     @Async
     public void subscribe(PushEvent<StudentWithGrade> event) {

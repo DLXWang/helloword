@@ -4,6 +4,7 @@ package com.test.controller;
 import com.test.controller.model.ResultType;
 import com.test.mongo.DailyFee;
 import com.test.mongo.HedgeAccount;
+import com.test.mongo.HedgeSpotAccount;
 import com.test.mongo.Student;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +27,7 @@ import reactor.core.publisher.Flux;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Collection;
 import java.util.List;
 
 import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
@@ -55,6 +57,47 @@ public class MongoController {
                 .totalFee(fee)
                 .selectedAccountId(1L).build();
         mongoTemplate.save(binance);
+    }
+
+
+
+
+
+
+    @ApiOperation(value = "test-mongo-insertAll-account")
+    @GetMapping("/test-mongo-insertAll-account")
+    public void testSaveAccount() {
+        HedgeSpotAccount build = HedgeSpotAccount.builder()
+                .id(1L)
+                .name("账户1")
+                .comment("账户1")
+                .enabled(false)
+                .creatorId("001")
+                .updaterId("001")
+                .createdTime(System.currentTimeMillis())
+                .updatedTime(System.currentTimeMillis()).build();
+        HedgeSpotAccount build2 = HedgeSpotAccount.builder()
+                .id(2L)
+                .name("账户2")
+                .comment("账户2")
+                .enabled(false)
+                .creatorId("001")
+                .updaterId("001")
+                .createdTime(System.currentTimeMillis())
+                .updatedTime(System.currentTimeMillis()).build();
+        HedgeSpotAccount build3 = HedgeSpotAccount.builder()
+                .id(3L)
+                .name("账户3")
+                .comment("账户3")
+                .enabled(false)
+                .creatorId("001")
+                .updaterId("001")
+                .createdTime(System.currentTimeMillis())
+                .updatedTime(System.currentTimeMillis()).build();
+
+
+        Collection<HedgeSpotAccount> hedgeSpotAccounts = mongoTemplate.insertAll(List.of(build, build2, build3));
+        System.out.println(hedgeSpotAccounts);
     }
 
 

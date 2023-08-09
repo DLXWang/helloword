@@ -9,7 +9,7 @@ import org.yeauty.pojo.Session;
 
 
 
-@ServerEndpoint(path = "/ws/order", port = "8080")
+@ServerEndpoint(path = "/ws/order", port = "8080") // 不需要其他，随web容器，web容器会负责注入
 @Slf4j
 @RequiredArgsConstructor
 public class NettyOrderWebSocket {

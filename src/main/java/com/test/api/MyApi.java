@@ -10,7 +10,7 @@ import reactivefeign.spring.config.ReactiveFeignClient;
 import reactor.core.publisher.Mono;
 
 @ReactiveFeignClient(name = "remote-service", url = "http://localhost:8090")
-@Repository
+@Repository// 没用，只是为了引用正常，通过@EnableReactiveFeignClients wrap 和 注入
 public interface MyApi extends ServiceApi{
     @Override
     @GetMapping("/test/A")
@@ -20,7 +20,7 @@ public interface MyApi extends ServiceApi{
     @GetMapping("/test/B")
     Mono<B> testB();
 
-
+    // 没用上，加在ReactiveFeignClient注解里
     @Component
     class MyApiFallbackFactory implements FallbackFactory<MyApi> {
 

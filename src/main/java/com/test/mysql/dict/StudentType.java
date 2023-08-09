@@ -9,7 +9,7 @@ import lombok.Getter;
 public enum StudentType {
     MALE(0, "男"),
     FEMALE(1, "女");
-    @EnumValue
+    @EnumValue  // 高版本直接用
     private final int value;
     private final String desc;
 }
